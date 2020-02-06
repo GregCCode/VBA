@@ -1,0 +1,25 @@
+Sub MakeTableFromPivot()
+Dim sht As Worksheet
+Dim LastColumn As Long
+Dim LastRow As Long
+'GC 2020-02-06
+
+'Get Pivot
+    ActiveSheet.PivotTables(1).PivotSelect "", xlDataAndLabel
+    Selection.Copy
+    Sheets.Add
+'PastePivot Values
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, Transpose:=False
+   Application.CutCopyMode = False
+'Make A Table
+    LastRow = ActiveSheet.Cells.SpecialCells(xlCellTypeLastCell).Row
+    LastColumn = ActiveSheet.Cells(2, Columns.Count).End(xlToLeft).Column
+    Application.CutCopyMode = False
+    sht.ListObjects.Add(xlSrcRange, Range(Cells(2, 1), Cells(LastRow, LastColumn)), , xlYes).Name = _
+        "TableFroPivot"
+'Move To New Workbook
+    sht.Move
+    Range("A1").Select
+End Sub
+
