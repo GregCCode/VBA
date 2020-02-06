@@ -3,9 +3,8 @@ Dim sht As Worksheet
 Dim LastColumn As Long
 Dim LastRow As Long
 'GC 2020-02-06
-
 'Get Pivot
-    ActiveSheet.PivotTables(1).PivotSelect "", xlDataAndLabel
+    ActiveSheet.PivotTables(1).TableRange1.Select
     Selection.Copy
     Sheets.Add
 'PastePivot Values
@@ -14,12 +13,11 @@ Dim LastRow As Long
    Application.CutCopyMode = False
 'Make A Table
     LastRow = ActiveSheet.Cells.SpecialCells(xlCellTypeLastCell).Row
-    LastColumn = ActiveSheet.Cells(2, Columns.Count).End(xlToLeft).Column
+    LastColumn = ActiveSheet.Cells(1, Columns.Count).End(xlToLeft).Column
     Application.CutCopyMode = False
-    sht.ListObjects.Add(xlSrcRange, Range(Cells(2, 1), Cells(LastRow, LastColumn)), , xlYes).Name = _
-        "TableFroPivot"
+    ActiveSheet.ListObjects.Add(xlSrcRange, Range(Cells(1, 1), Cells(LastRow, LastColumn)), , xlYes).Name = _
+        "TableFromPivot"
 'Move To New Workbook
-    sht.Move
+    ActiveSheet.Move
     Range("A1").Select
 End Sub
-
