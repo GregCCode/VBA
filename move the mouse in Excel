@@ -1,0 +1,39 @@
+'Ref Required
+'Visual BAsic For Applications
+'Microsoft Excel xx.x Ojbject Library
+'OLE Automation
+'Microsoft Office xx.x Object Library
+
+Public Declare Function SetCursorPos Lib "user32" (ByVal x As Long, ByVal y As Long) As Long
+Public Declare Sub mouse_event Lib "user32" (ByVal dwFlags As Long, ByVal dx As Long, ByVal dy As Long, ByVal cButtons As Long, ByVal dwExtraInfo As Long)
+Public Const MOUSEEVENTF_LEFTDOWN = &H2
+Public Const MOUSEEVENTF_LEFTUP = &H4
+Public Const MOUSEEVENTF_RIGHTDOWN As Long = &H8
+Public Const MOUSEEVENTF_RIGHTUP As Long = &H10
+
+Private Sub SingleClick()
+  SetCursorPos 100, 100 'x and y position
+  mouse_event MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0
+  mouse_event MOUSEEVENTF_LEFTUP, 0, 0, 0, 0
+End Sub
+
+Public Sub move()
+x = 1
+y = 1000
+Do Until x = y
+SetCursorPos 100, 100 'x and y position
+   newHour = Hour(Now())
+   newMin = Minute(Now())
+   Newsec = Second(Now()) + 5
+   waittime = TimeSerial(newHour, newMin, Newsec)
+mouse_event MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0
+   Application.Wait waittime
+SetCursorPos 100, 500 'x and y position
+    newHour = Hour(Now())
+   newMin = Minute(Now())
+   Newsec = Second(Now()) + 5
+   waittime = TimeSerial(newHour, newMin, Newsec)
+    mouse_event MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0
+   Application.Wait waittime
+Loop
+End Sub
